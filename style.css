@@ -2,3 +2,9 @@
     width: 500px;
     border: 2px solid black;
 }
+
+#numbers {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    width: 500px;
+}
