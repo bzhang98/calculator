@@ -38,3 +38,10 @@ for(let number of numbers) {
     });
 }
 
+const operators = Array.from(document.querySelectorAll('.operator'));
+for(let operator of operators) {
+    operator.addEventListener('click', () => {
+        displayValue += ` ${operator.textContent} `;
+        display.textContent = displayValue
+    });
+}
