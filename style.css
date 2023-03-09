@@ -1,10 +1,77 @@
+body {
+    transform: scale(4);
+    transform-origin: 0 0;
+}
+
 #display {
-    width: 500px;
-    border: 2px solid black;
+    width: 200px;
+    border: 1px solid black;
+    margin-bottom: 6px;
+    height: 24px;
+    font-size: 24px;
+}
+
+#button-container {
+    display: flex;
+}
+
+#operators {
+    display: grid;
+    margin-left: 12px;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 1fr) 40%;
+    gap: 5px;
 }
 
 #numbers {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    width: 500px;
+    width: 100px;
+    grid-gap: 5px;
+    align-items: stretch;
+}
+
+.number {
+    aspect-ratio: 1;
+    background-color: rgb(70, 70, 70);
+    color: white;
+}
+
+#divide,
+#multiply,
+#subtract,
+#equals {
+    flex: auto;
+    background-color: rgb(166, 166, 166);
+}
+
+#divide {
+    grid-row: 1/2;
+}
+
+#multiply {
+    grid-row: 2/3;
+}
+
+#subtract {
+    grid-row: 3/4;
+}
+
+#clear,
+#add {
+    background-color: rgb(64, 126, 83);
+}
+
+#add {
+    flex-grow: 4;
+    grid-row: 4/5;
+}
+
+#equals {
+    grid-row: 4/5;
+}
+
+button {
+    border: 1px solid black;
+    border-radius: 6px;
 }
