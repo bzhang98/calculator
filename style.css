@@ -1,6 +1,7 @@
 body {
     transform: scale(4);
     transform-origin: 0 0;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 #display {
