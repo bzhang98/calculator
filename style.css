@@ -91,3 +91,7 @@ button {
     border: 1px solid black;
     border-radius: 6px;
 }
+
+button:hover {
+    background-image: linear-gradient(rgb(0 0 0/20%) 0 0);
+}
