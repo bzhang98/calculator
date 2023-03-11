@@ -4,17 +4,30 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
+p {
+    margin: 0px;
+}
+
 #display {
     width: 200px;
     border: 1px solid black;
-    margin-bottom: 6px;
-    height: 16px;
-    font-size: 16px;
+    height: 1.8em;
+    padding: 3px;
     text-align: right;
+    font-size: 16px;
 }
+
+
+p#evaluated-expression {
+    font-size: 12px;
+    height: 1em;
+    color: rgb(120, 120, 120);
+}
+
 
 #button-container {
     display: flex;
+    margin-top: 8px;
 }
 
 #operators {
@@ -33,7 +46,8 @@ body {
     align-items: stretch;
 }
 
-.number {
+.number,
+#decimal {
     aspect-ratio: 1;
     background-color: rgb(70, 70, 70);
     color: white;
