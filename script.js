@@ -33,6 +33,9 @@ function evaluate(expression) {
         let evalSubtract = eval.subtract(parts[subtractLocation - 1], parts[subtractLocation + 1]);
         parts.splice(subtractLocation - 1, 3, evalSubtract);
     }
+    if (parts[0] === Infinity) {
+        return `Undefined`;
+    }
     return parts[0];
 }
 
@@ -60,7 +63,7 @@ const lastExpression = document.querySelector('#evaluated-expression');
 const numbers = Array.from(document.querySelectorAll('.number'));
 for (let number of numbers) {
     number.addEventListener('click', () => {
-        if (expression === answer || expression.toString() === '0') {
+        if (expression === answer || expression.toString() === '0' || expression === 'undefined') {
             updateDisplay(false, number.textContent)
         } else {
             updateDisplay(true, number.textContent)
