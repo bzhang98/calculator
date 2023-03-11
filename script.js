@@ -28,8 +28,8 @@ function evaluate(expression) {
         parts.splice(addLocation - 1, 3, evalAdd);
     }
 
-    while (parts.includes('-')) {
-        let subtractLocation = parts.indexOf('-');
+    while (parts.includes('–')) {
+        let subtractLocation = parts.indexOf('–');
         let evalSubtract = eval.subtract(parts[subtractLocation - 1], parts[subtractLocation + 1]);
         parts.splice(subtractLocation - 1, 3, evalSubtract);
     }
@@ -57,8 +57,11 @@ function updateDisplay(append, char) {
 let displayValue = '';
 let answer = '';
 let expression = '';
+
 const input = document.querySelector('#input');
 const lastExpression = document.querySelector('#evaluated-expression');
+
+window.onload = updateDisplay(false, '0');
 
 const numbers = Array.from(document.querySelectorAll('.number'));
 for (let number of numbers) {
@@ -90,9 +93,9 @@ window.onload = decimal.enable();
 const operators = Array.from(document.querySelectorAll('.operator'));
 for (let operator of operators) {
     operator.addEventListener('click', () => {
-        const conditions = ['+', '-', 'x', '÷']
+        const conditions = ['+', '–', 'x', '÷']
         if (conditions.some(el => expression.toString().slice(-2).includes(el))) {
-            let newExpression = `${expression.slice(0, -3)} ${operator.textContent} `;
+            let newExpression = `${expression.toString().slice(0, -3)} ${operator.textContent} `;
             updateDisplay(false, newExpression);
             decimal.disable();
             decimal.enable();
