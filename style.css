@@ -23,7 +23,7 @@ p {
 }
 
 
-p#evaluated-expression {
+p#expression {
     font-size: 12px;
     height: 1em;
     color: rgb(120, 120, 120);
