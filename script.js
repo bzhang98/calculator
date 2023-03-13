@@ -59,7 +59,7 @@ input.textContent = '0';
 const numbers = Array.from(document.querySelectorAll('.number'));
 for (let number of numbers) {
     number.addEventListener('click', () => {
-        if (currentNum === 'Undefined' || currentNum.toString() === '0') {
+        if (currentNum === 'Undefined' || currentNum.toString() === '0' || currentNum.toString() === answer.toString()) {
             currentNum = number.textContent;
             input.textContent = currentNum;
         } else {
@@ -82,21 +82,27 @@ const operators = Array.from(document.querySelectorAll('.operator'));
 for (let operator of operators) {
     operator.addEventListener('click', () => {
         if (!(currentNum === 'Undefined')) {
+            if (currentNum && !lastNum) {
+                currentOperator = operator.id;
+                lastNum = currentNum;
+                expression.textContent = `${lastNum} ${operator.textContent}`;
+                currentNum = '';
+            }
+            
+
             if (currentNum && lastNum) {
                 nextNum = currentNum;
                 answer = evaluate(currentOperator, lastNum, currentNum);
-                updateDisplay(lastNum, currentNum);
-                currentNum = answer;
+                input.textContent = answer;
+                expression.textContent = `${answer} ${operator.textContent}`;
                 
-                lastNum = '';
-                currentOperator = '';
-                
-            }
-            currentOperator = operator.id;
-            if (currentNum && !lastNum) lastNum = currentNum;
 
-            expression.textContent = `${lastNum} ${operator.textContent} = `;
-            currentNum = '';
+                lastNum = answer;
+                currentNum = '';
+                currentOperator = operator.id;
+
+            }
+            
         }
     });
 }
