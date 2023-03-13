@@ -81,8 +81,9 @@ const operators = Array.from(document.querySelectorAll('.operator'));
 for (let operator of operators) {
     operator.addEventListener('click', () => {
         if (!(currentNum === 'Undefined')) {
+
             if (currentNum && !lastNum) {
-                currentOperator = operator.id;
+
                 lastNum = currentNum;
                 expression.textContent = `${lastNum} ${operator.textContent}`;
                 currentNum = '';
@@ -98,27 +99,32 @@ for (let operator of operators) {
                 currentNum = '';
                 currentOperator = operator.id;
             }
+            currentOperator = operator.id;
+            expression.textContent = `${lastNum} ${operator.textContent}`;
         }
     });
 }
 
 const equals = document.querySelector('#equals');
 equals.addEventListener('click', () => {
-    if (currentOperator) {
-        lastOperator = currentOperator;
-        answer = evaluate(currentOperator, lastNum, currentNum);
-        updateDisplay(lastNum, currentNum);
-        nextNum = currentNum;
-        currentNum = answer;
-        lastNum = '';
-        currentOperator = '';
-    } else {
-        answer = evaluate(lastOperator, currentNum, nextNum);
-        lastNum = currentNum;
-        currentNum = answer;
-        updateDisplay(lastNum, nextNum);
-        lastNum = '';
+    if (currentNum && lastNum || currentNum && nextNum) {
+        if (currentOperator) {
+            lastOperator = currentOperator;
+            answer = evaluate(currentOperator, lastNum, currentNum);
+            updateDisplay(lastNum, currentNum);
+            nextNum = currentNum;
+            currentNum = answer;
+            lastNum = '';
+            currentOperator = '';
+        } else {
+            answer = evaluate(lastOperator, currentNum, nextNum);
+            lastNum = currentNum;
+            currentNum = answer;
+            updateDisplay(lastNum, nextNum);
+            lastNum = '';
+        }
     }
+
 });
 
 const clear = document.querySelector('#clear');
