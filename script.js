@@ -66,7 +66,6 @@ for (let number of numbers) {
             currentNum += number.textContent;
             input.textContent = currentNum;
         }
-
     });
 }
 
@@ -88,21 +87,17 @@ for (let operator of operators) {
                 expression.textContent = `${lastNum} ${operator.textContent}`;
                 currentNum = '';
             }
-            
+
 
             if (currentNum && lastNum) {
                 nextNum = currentNum;
                 answer = evaluate(currentOperator, lastNum, currentNum);
                 input.textContent = answer;
                 expression.textContent = `${answer} ${operator.textContent}`;
-                
-
                 lastNum = answer;
                 currentNum = '';
                 currentOperator = operator.id;
-
             }
-            
         }
     });
 }
@@ -140,78 +135,14 @@ clear.addEventListener('click', () => {
     }
 });
 
-
-
-
-/* window.addEventListener('keydown', (e) => {
+window.addEventListener('keydown', (e) => {
     if (!isNaN(e.key)) {
-        if (!parameters.displayingAnswer) {
-            displayValue += e.key;
+        if (currentNum === 'Undefined' || currentNum.toString() === '0' || currentNum.toString() === answer.toString()) {
+            currentNum = e.key;
+            input.textContent = currentNum;
         } else {
-            displayValue = e.key
-            parameters.displayingAnswer = false;
+            currentNum += e.key;
+            input.textContent = currentNum;
         }
-        parameters.canInputOperator = true;
-        display.textContent = displayValue;
     }
-
-    if (parameters.canInputOperator) {
-        switch (e.key) {
-            case '+':
-            case '-':
-                displayValue += ` ${e.key} `;
-                display.textContent = displayValue;
-                parameters.displayingAnswer = false;
-                parameters.decimalInNum = false;
-                break;
-            case '/':
-                displayValue += ' ÷ ';
-                display.textContent = displayValue;
-                parameters.displayingAnswer = false;
-                parameters.decimalInNum = false;
-                break;
-            case '*':
-                displayValue += ' x ';
-                display.textContent = displayValue;
-                parameters.displayingAnswer = false;
-                parameters.decimalInNum = false;
-                break;
-        }
-        parameters.canInputOperator = false;
-    }
-
-    switch (e.key) {
-        case '.':
-            if (!parameters.decimalInNum) {
-                displayValue += e.key;
-                display.textContent = displayValue;
-                parameters.displayingAnswer = false;
-                parameters.decimalInNum = true;
-            }
-            break;
-        case 'Enter':
-            e.preventDefault();
-            lastExpression.textContent = `${displayValue} =`;
-            displayValue = evaluate(displayValue);
-            display.textContent = displayValue;
-            parameters.displayingAnswer = true;
-            parameters.decimalInNum = false;
-            answerLength = displayValue.toString().length;
-            break;
-        case 'Backspace':
-            if (!displayingAnswer && displayValue.length > answerLength) {
-                switch (displayValue.slice(-3)) {
-                    case ' + ':
-                    case ' - ':
-                    case ' ÷ ':
-                        displayValue = displayValue.slice(0, -3);
-                        break;
-                    default:
-                        displayValue = displayValue.slice(0, -1);
-                        break;
-                }
-                display.textContent = displayValue;
-            }
-            break;
-    }
-}); */
+});
