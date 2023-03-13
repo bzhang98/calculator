@@ -6,56 +6,67 @@ const eval = {
 }
 
 function evaluate(operator, a, b) {
+    let answer;
     switch (operator) {
         case 'add':
-            return eval.add(a, b);
+            answer = eval.add(a, b);
+            break;
         case 'subtract':
-            return eval.subtract(a, b);
+            answer = eval.subtract(a, b);
+            break;
         case 'multiply':
-            return eval.multiply(a, b);
+            answer = eval.multiply(a, b);
+            break;
         case 'divide':
-            return eval.divide(a, b);
+            answer = eval.divide(a, b);
+            break;
     }
+    if (answer === Infinity || answer === NaN) answer = 'Undefined'
+    return answer;
 }
 
-function updateDisplay() {
-    answer = evaluate(currentOperator, lastNum, currentNum);
+function updateDisplay(num1, num2) {
     input.textContent = answer;
-    switch (currentOperator) {
+    switch (currentOperator || lastOperator) {
         case 'add':
-            expression.textContent = `${lastNum} + ${currentNum} = `
+            expression.textContent = `${num1} + ${num2} = `
             break;
         case 'subtract':
-            expression.textContent = `${lastNum} - ${currentNum} = `
+            expression.textContent = `${num1} - ${num2} = `
             break;
         case 'multiply':
-            expression.textContent = `${lastNum} x ${currentNum} = `
+            expression.textContent = `${num1} x ${num2} = `
             break;
         case 'divide':
-            expression.textContent = `${lastNum} ÷ ${currentNum} = `
+            expression.textContent = `${num1} ÷ ${num2} = `
             break;
     }
-    currentNum = answer;
-    lastNum = '';
-    currentOperator = '';
 }
 
 let input = document.querySelector('#input');
 let expression = document.querySelector('#expression');
 
-//let inputValue = '0';
-let currentNum = '';
 let answer = '';
+let currentNum = '';
 let lastNum = '';
+let nextNum = '';
 let currentOperator = '';
+let lastOperator = '';
+
 
 input.textContent = '0';
 
 const numbers = Array.from(document.querySelectorAll('.number'));
 for (let number of numbers) {
     number.addEventListener('click', () => {
-        currentNum += number.textContent;
-        input.textContent = currentNum;
+        if (currentNum === 'Undefined' || currentNum.toString() === '0') {
+            currentNum = number.textContent;
+            input.textContent = currentNum;
+        } else {
+            currentNum += number.textContent;
+            input.textContent = currentNum;
+        }
+
     });
 }
 
@@ -70,21 +81,42 @@ decimal.addEventListener('click', () => {
 const operators = Array.from(document.querySelectorAll('.operator'));
 for (let operator of operators) {
     operator.addEventListener('click', () => {
-        if (currentNum && lastNum) {
-            updateDisplay();
-        }
-        currentOperator = operator.id;
-        if (currentNum && !lastNum) lastNum = currentNum;
+        if (!(currentNum === 'Undefined')) {
+            if (currentNum && lastNum) {
+                nextNum = currentNum;
+                answer = evaluate(currentOperator, lastNum, currentNum);
+                updateDisplay(lastNum, currentNum);
+                currentNum = answer;
+                
+                lastNum = '';
+                currentOperator = '';
+                
+            }
+            currentOperator = operator.id;
+            if (currentNum && !lastNum) lastNum = currentNum;
 
-        expression.textContent = `${lastNum} ${operator.textContent} = `
-        currentNum = '';
+            expression.textContent = `${lastNum} ${operator.textContent} = `;
+            currentNum = '';
+        }
     });
 }
 
 const equals = document.querySelector('#equals');
 equals.addEventListener('click', () => {
     if (currentOperator) {
-        updateDisplay();
+        lastOperator = currentOperator;
+        answer = evaluate(currentOperator, lastNum, currentNum);
+        updateDisplay(lastNum, currentNum);
+        nextNum = currentNum;
+        currentNum = answer;
+        lastNum = '';
+        currentOperator = '';
+    } else {
+        answer = evaluate(lastOperator, currentNum, nextNum);
+        lastNum = currentNum;
+        currentNum = answer;
+        updateDisplay(lastNum, nextNum);
+        lastNum = '';
     }
 });
 
